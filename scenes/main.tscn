@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/tileset..tres" type="TileSet" id=1]
 [ext_resource path="res://assets/player/character_0006.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 9 )
 
 [node name="Node" type="Node"]
 
@@ -14,9 +18,14 @@ tile_data = PoolIntArray( 262139, 0, 0, 262140, 0, 0, 262141, 0, 0, 262142, 0, 0
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( -61, 35 )
+script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, 3 )
+shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
