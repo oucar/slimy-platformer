@@ -1,14 +1,13 @@
 [gd_resource type="TileSet" load_steps=3 format=2]
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( 0, 0, 18, 0, 18, 18, 0, 18 )
+[ext_resource path="res://assets/tiles/tiles_packed.png" type="Texture" id=1]
 
-[sub_resource type="StreamTexture" id=1]
-load_path = "res://.import/tiles_packed.png-b5efa6f182dc1cdf4a54c3c9a8baab78.stex"
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 18, 18, 0, 18, 0, 0, 18, 0 )
 
 [resource]
-0/name = "tileset..tres::1 0"
-0/texture = SubResource( 1 )
+0/name = "tiles_packed.png 0"
+0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 18, 18 )
