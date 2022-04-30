@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
-var gravity = 300
+var gravity = 1000
 var velocity = Vector2.ZERO
-var maxHorizontalSpeed = 100
-var horizontalAcceleration = 1500
-var jumpSpeed = 200
+var maxHorizontalSpeed = 140
+var horizontalAcceleration = 2000
+var jumpSpeed = 360
+var jumpMultiplier = 4
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,7 +25,7 @@ func _process(delta):
 	# deacceleration
 	if(moveVector.x == 0):
 		# https://www.gamedeveloper.com/programming/improved-lerp-smoothing-
-		velocity.x = lerp(velocity.x, 0, .1)
+		velocity.x = lerp(0, velocity.x, pow(2, -50 * delta))
 	
 	velocity.x = clamp(velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed)
 	
@@ -32,6 +33,12 @@ func _process(delta):
 	if (moveVector.y < 0 && is_on_floor()):
 		velocity.y = moveVector.y * jumpSpeed
 
-	velocity.y += gravity * delta
+	# jump variability 
+	# if you're going up and not holding the jump key
+	if (velocity.y < 0 && !Input.is_action_pressed("jump")):
+		velocity.y += gravity * delta * jumpMultiplier 
+	else:
+		velocity.y += gravity * delta
+		
 	# takes an input vector, moves the character by vector * delta - resets velocity to 0 after collision
 	velocity = move_and_slide(velocity, Vector2.UP)
