@@ -8,6 +8,9 @@ var jumpSpeed = 360
 var jumpMultiplier = 4
 var hasDoubleJump = false
 
+# signals
+signal died
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Get hazardArea node, connect area_entered, listen for self and call on_hazard_area_entered!
@@ -84,3 +87,4 @@ func update_animation():
 			
 func on_hazard_area_entered(area2d):
 	print("You would die, but this is your lucky day.")
+	emit_signal("died")
