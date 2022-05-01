@@ -10,12 +10,15 @@ func _ready():
 	
 func register_player(player):
 	currentPlayerNode = player
-	currentPlayerNode.connect("died", self, "on_player_died")
+	# deferred means it'll go to the next idle frame 
+	# you need an empty array to use 4th argument
+	currentPlayerNode.connect("died", self, "on_player_died", [], CONNECT_DEFERRED)
 	
 func create_player():
 	var playerInstance = playerScene.instance()
 	# replaces the player node
 	add_child_below_node(currentPlayerNode, playerInstance)
+	playerInstance.global_position = spawnPosition
 	register_player(playerInstance)
 	
 func on_player_died():

@@ -86,5 +86,5 @@ func update_animation():
 			get_node("AnimatedSprite").flip_h = false
 			
 func on_hazard_area_entered(area2d):
-	print("You would die, but this is your lucky day.")
+	# print("You would die, but this is your lucky day.")
 	emit_signal("died")
