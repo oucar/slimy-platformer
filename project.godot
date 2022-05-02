@@ -90,7 +90,8 @@ dash={
 2d_physics/layer_2="enemy"
 2d_physics/layer_16="pickup"
 2d_physics/layer_17="enemy goal"
-2d_physics/layer_21="hazard"
+2d_physics/layer_20="enemy hazard"
+2d_physics/layer_21="spike hazard"
 
 [physics]
 
