@@ -7,15 +7,14 @@ var gravity = 500
 enum Direction {RIGHT, LEFT}
 export(Direction) var startDirection
 
-#### SHOULD BE OVERWRITTEN BY THE ENEMIES THAT FLY! ###
+# FOR INHERITANCE
+class_name Enemy
+
+#### SHOULD BE OVERWRITTEN BY THE ENEMIES THAT DOES NOT FLY! ###
 func _process(delta):
 	velocity.x = (direction * maxSpeed).x
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
-	# no longer on the platform
-	if(!is_on_floor()):
-		velocity.y += gravity * delta
-		
+
 	if(direction.x > 0):
 		get_node("AnimatedSprite").flip_h = true
 	else:
@@ -35,9 +34,9 @@ func _ready():
 #############################
 ##### VIRTUAL FUNCTIONS #####
 #############################
-	
-func _on_goal_entered(_area2d):
-	pass
+func on_goal_entered(_area2d):
+	# flip the direction
+	direction = direction * -1
 
 func _on_hurtbox_entered(_area2d):
 	pass
