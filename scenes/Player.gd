@@ -1,15 +1,23 @@
 extends KinematicBody2D
 
+# signals
+signal died
+
+# finite state 
+enum State { NORMAL, DASH}
+
 var gravity = 1000
 var velocity = Vector2.ZERO
 var maxHorizontalSpeed = 140
+var maxDashSpeed = 500
+var minDashSpeed = 200
 var horizontalAcceleration = 2000
 var jumpSpeed = 360
 var jumpMultiplier = 4
 var hasDoubleJump = false
+var isStateNew = true
+var currentState = State.NORMAL
 
-# signals
-signal died
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,11 +26,28 @@ func _ready():
 	get_node("HazardArea").connect("area_entered", self, "on_hazard_area_entered")
 
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var moveVector = get_movement_vector()
+	match currentState:
+		State.NORMAL:
+			_process_normal(delta)
+		State.DASH:
+			_process_dash(delta)
+			isStateNew = false
+	
+###### MOVEMENT RELATED ###### 
+func get_movement_vector():
+	var moveVector = Vector2.ZERO
+	# will return either 0 or 1 
+	# jump - 1 --> we want to go up on the y axis
+	moveVector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	moveVector.y = -1 if  Input.is_action_just_pressed("jump") else 0 
+	return moveVector
 
+# movement -process- functions for normal movement (running) and dash (dashing)
+func _process_normal(delta):
+	var moveVector = get_movement_vector()
+	
 	velocity.x += moveVector.x * horizontalAcceleration * delta
 	# deacceleration
 	if(moveVector.x == 0):
@@ -57,17 +82,45 @@ func _process(delta):
 	# double jump 
 	if(is_on_floor()):
 		hasDoubleJump = true
+		
+	# dash
+	if(Input.is_action_just_pressed("dash")):
+		# multithreading - will be called after everything is done
+		call_deferred("change_state", State.DASH)
 	
 	update_animation()
 
-func get_movement_vector():
-	var moveVector = Vector2.ZERO
-	# will return either 0 or 1 
-	# jump - 1 --> we want to go up on the y axis
-	moveVector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	moveVector.y = -1 if  Input.is_action_just_pressed("jump") else 0 
-	return moveVector
+func _process_dash(delta):
+	if(isStateNew == true):
+		get_node("AnimatedSprite").play("jump")
+		var moveVector = get_movement_vector()
+		var facingDirection = 1
+		# dashing when moving
+		if(moveVector.x != 0):
+			facingDirection = sign(moveVector.x)
+		# dashing when stationary
+		else: 
+			if(get_node("AnimatedSprite").flip_h == true):
+				print("facing right")
+			else: 
+				facingDirection = -1
+		# x direction, y direction
+		velocity = Vector2(maxDashSpeed * facingDirection, 0)
+		
+	velocity = move_and_slide(velocity, Vector2.UP)
+	velocity.x = lerp(0, velocity.x, pow(2, -10 * delta))
 
+	# abs required because of the facing direction
+	if(abs(velocity.x) < minDashSpeed):
+		call_deferred("change_state", State.NORMAL)
+		
+	
+func change_state(newState):
+	currentState = newState
+	isStateNew = true
+	
+
+###### UPDATING THE ANIMATION ###### 
 func update_animation():
 	# get the current movement vector
 	var curMovementVector = get_movement_vector()
@@ -84,7 +137,8 @@ func update_animation():
 			get_node("AnimatedSprite").flip_h = true
 		else:
 			get_node("AnimatedSprite").flip_h = false
-			
+				
+###### SIGNAL RELATED ###### 
 func on_hazard_area_entered(_area2d):
 	# print("You would die, but this is your lucky day.")
 	emit_signal("died")
