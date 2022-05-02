@@ -71,6 +71,7 @@ jump={
 [layer_names]
 
 2d_physics/layer_16="pickup"
+2d_physics/layer_17="enemy goal"
 2d_physics/layer_21="hazard"
 
 [physics]
