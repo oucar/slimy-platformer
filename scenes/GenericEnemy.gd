@@ -7,11 +7,7 @@ var gravity = 500
 enum Direction {RIGHT, LEFT}
 export(Direction) var startDirection
 
-######### IMPORTANT ######### 
-# Removing layer: No longer collide with the player
-# Removing mask: Detects collision but doesn't collide with the player
-
-
+#### SHOULD BE OVERWRITTEN BY THE ENEMIES THAT FLY! ###
 func _process(delta):
 	velocity.x = (direction * maxSpeed).x
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -25,7 +21,6 @@ func _process(delta):
 	else:
 		get_node("AnimatedSprite").flip_h = false
 	
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# setting the starting direction
@@ -36,13 +31,13 @@ func _ready():
 	
 	get_node("GoalDetector").connect("area_entered", self, "on_goal_entered")
 	get_node("HurtboxArea").connect("area_entered", self, "on_hurtbox_entered")
-	
-# Signal functions
-func on_goal_entered(_area2d):
-	# flip the direction
-	direction = direction * -1
-	
-func on_hurtbox_entered(_area2d):
-	print("Guard has been killed!")
-	queue_free()
 
+#############################
+##### VIRTUAL FUNCTIONS #####
+#############################
+	
+func _on_goal_entered(_area2d):
+	pass
+
+func _on_hurtbox_entered(_area2d):
+	pass

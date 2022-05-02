@@ -29,8 +29,12 @@ func _ready():
 		direction = Vector2.LEFT
 	
 	get_node("GoalDetector").connect("area_entered", self, "on_goal_entered")
+	get_node("HurtboxArea").connect("area_entered", self, "on_hurtbox_entered")
 	
 func on_goal_entered(_area2d):
 	# flip the direction
 	direction = direction * -1
 
+func on_hurtbox_entered(_area2d):
+	print("Fly has been killed!")
+	queue_free()
