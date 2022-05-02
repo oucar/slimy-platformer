@@ -3,6 +3,8 @@ extends KinematicBody2D
 # signals
 signal died
 
+export(int, LAYERS_2D_PHYSICS) var dashHazardMask
+
 # finite state 
 enum State { NORMAL, DASH}
 
@@ -17,13 +19,15 @@ var jumpMultiplier = 4
 var hasDoubleJump = false
 var isStateNew = true
 var currentState = State.NORMAL
-
+var defaultHazardMask = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Get hazardArea node, connect area_entered, listen for self and call on_hazard_area_entered!
 	# Make sure you set the collision layer and mask too!
 	get_node("HazardArea").connect("area_entered", self, "on_hazard_area_entered")
+	
+	defaultHazardMask = get_node("HazardArea").collision_mask
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -47,6 +51,7 @@ func get_movement_vector():
 func _process_normal(delta):
 	if(isStateNew):
 		get_node("DashArea/CollisionShape2D").disabled = true
+		get_node("HazardArea").collision_mask = defaultHazardMask
 	var moveVector = get_movement_vector()
 	
 	velocity.x += moveVector.x * horizontalAcceleration * delta
@@ -94,6 +99,7 @@ func _process_normal(delta):
 func _process_dash(delta):
 	if(isStateNew == true):
 		get_node("DashArea/CollisionShape2D").disabled = false
+		get_node("HazardArea").collision_mask = dashHazardMask
 		get_node("AnimatedSprite").play("jump")
 		var moveVector = get_movement_vector()
 		var facingDirection = 1
