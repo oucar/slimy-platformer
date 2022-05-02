@@ -154,7 +154,7 @@ points = PoolVector2Array( 0, 0, 18, 0, 18, 18, 0, 18 )
 0/z_index = 0
 
 [node name="BaseLevel" type="Node2D"]
-position = Vector2( 20, -2 )
+position = Vector2( 18, 0 )
 script = ExtResource( 7 )
 
 [node name="TileMap" type="TileMap" parent="."]

@@ -25,7 +25,6 @@ func _ready():
 	# Make sure you set the collision layer and mask too!
 	get_node("HazardArea").connect("area_entered", self, "on_hazard_area_entered")
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	match currentState:
@@ -46,6 +45,8 @@ func get_movement_vector():
 
 # movement -process- functions for normal movement (running) and dash (dashing)
 func _process_normal(delta):
+	if(isStateNew):
+		get_node("DashArea/CollisionShape2D").disabled = true
 	var moveVector = get_movement_vector()
 	
 	velocity.x += moveVector.x * horizontalAcceleration * delta
@@ -92,6 +93,7 @@ func _process_normal(delta):
 
 func _process_dash(delta):
 	if(isStateNew == true):
+		get_node("DashArea/CollisionShape2D").disabled = false
 		get_node("AnimatedSprite").play("jump")
 		var moveVector = get_movement_vector()
 		var facingDirection = 1
