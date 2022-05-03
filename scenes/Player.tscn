@@ -4,16 +4,6 @@
 [ext_resource path="res://assets/player/character_0010.png" type="Texture" id=3]
 [ext_resource path="res://assets/player/character_0009.png" type="Texture" id=4]
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 12.0
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 4, 8.5 )
-
-[sub_resource type="CapsuleShape2D" id=5]
-radius = 11.0
-height = 14.0
-
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 4 ) ],
@@ -32,13 +22,38 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5, 9 )
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 8.0
+height = 8.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 12.0
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5, 7.5 )
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 11.0
+height = 14.0
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 collision_layer = 0
 script = ExtResource( 1 )
 dashHazardMask = 524288
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -12 )
+frames = SubResource( 2 )
+animation = "idle"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -10 )
+shape = SubResource( 6 )
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [node name="PickupArea" type="Area2D" parent="."]
 visible = false
@@ -50,15 +65,15 @@ position = Vector2( 0, -12 )
 shape = SubResource( 3 )
 
 [node name="HazardArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 1048576
-collision_mask = 1572864
+collision_mask = 1048576
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardArea"]
-position = Vector2( 0, -8.5 )
+position = Vector2( 0, -10 )
 shape = SubResource( 4 )
 
 [node name="DashArea" type="Area2D" parent="."]
+visible = false
 position = Vector2( 0, -11 )
 collision_layer = 0
 collision_mask = 2
@@ -67,18 +82,3 @@ collision_mask = 2
 rotation = 1.5708
 shape = SubResource( 5 )
 disabled = true
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -12 )
-frames = SubResource( 2 )
-animation = "idle"
-playing = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0, -9 )
-shape = SubResource( 1 )
-
-[node name="CoyoteTimer" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true

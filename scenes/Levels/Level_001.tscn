@@ -172,5 +172,8 @@ position = Vector2( -279, -72 )
 [node name="Spike" parent="Hazards" index="7" instance=ExtResource( 2 )]
 position = Vector2( -207, -88 )
 
-[node name="Player" parent="." index="5"]
-position = Vector2( -324, -384 )
+[node name="Flag" parent="." index="5"]
+position = Vector2( -9, -376 )
+
+[node name="Player" parent="." index="6"]
+position = Vector2( 387, 40 )
