@@ -17,6 +17,7 @@ var horizontalAcceleration = 2000
 var jumpSpeed = 320
 var jumpMultiplier = 4
 var hasDoubleJump = false
+var hasDash
 var isStateNew = true
 var currentState = State.NORMAL
 var defaultHazardMask = 0
@@ -88,11 +89,13 @@ func _process_normal(delta):
 	# double jump 
 	if(is_on_floor()):
 		hasDoubleJump = true
+		hasDash = true
 		
 	# dash
-	if(Input.is_action_just_pressed("dash")):
+	if(hasDash && Input.is_action_just_pressed("dash")):
 		# multithreading - will be called after everything is done
 		call_deferred("change_state", State.DASH)
+		hasDash = false
 	
 	update_animation()
 
@@ -109,8 +112,9 @@ func _process_dash(delta):
 		# dashing when stationary
 		else: 
 			if(get_node("AnimatedSprite").flip_h == true):
-				print("facing right")
+				print("facing right when dashing")
 			else: 
+				print("facing left when dashing")
 				facingDirection = -1
 		# x direction, y direction
 		velocity = Vector2(maxDashSpeed * facingDirection, 0)

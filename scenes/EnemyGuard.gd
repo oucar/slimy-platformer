@@ -14,5 +14,5 @@ func _process(delta):
 		get_node("AnimatedSprite").flip_h = false
 
 func on_hurtbox_entered(_area2d):
-	print("Guard has been killed!")
+	print("Guard has been killed! -->", _area2d)
 	queue_free()

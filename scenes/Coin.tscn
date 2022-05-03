@@ -70,13 +70,14 @@ animations = [ {
 "frames": [ ExtResource( 1 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "default",
-"speed": 4.0
+"speed": 7.0
 } ]
 
 [node name="Coin" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
 anims/idle = SubResource( 3 )
 anims/pickedUp = SubResource( 4 )
 
@@ -89,4 +90,5 @@ shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
+frame = 1
 playing = true
