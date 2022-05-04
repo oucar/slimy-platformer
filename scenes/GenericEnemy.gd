@@ -7,6 +7,9 @@ var gravity = 500
 enum Direction {RIGHT, LEFT}
 export(Direction) var startDirection
 
+# for ui - we should know when to update counter in the ui
+signal enemy_total_changed
+
 # FOR INHERITANCE
 class_name Enemy
 
@@ -30,6 +33,9 @@ func _ready():
 	
 	get_node("GoalDetector").connect("area_entered", self, "on_goal_entered")
 	get_node("HurtboxArea").connect("area_entered", self, "on_hurtbox_entered")
+
+# Enemy kill counter
+
 
 #############################
 ##### VIRTUAL FUNCTIONS #####
