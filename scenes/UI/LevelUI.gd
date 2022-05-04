@@ -11,8 +11,8 @@ func _ready():
 		baseLevels[0].connect("enemy_total_changed", self, "on_enemy_total_changed")
 	
 func on_coin_total_changed(totalCoins, collectedCoins):
-	get_node("MarginContainer/CoinLabel").text = str(collectedCoins, "/", totalCoins)
+	get_node("MarginContainer/Vertical/HorizontalCoin/CoinLabel").text = str(collectedCoins, "/", totalCoins)
 	
 func on_enemy_total_changed(totalEnemies, enemiesKilled):
-	get_node("MarginContainer/EnemyLabel").text = str(enemiesKilled, "/", totalEnemies)
+	get_node("MarginContainer/Vertical/HorizontalEnemy/EnemyLabel").text = str(enemiesKilled, "/", totalEnemies)
 	
