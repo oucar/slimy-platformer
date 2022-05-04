@@ -4,6 +4,8 @@ extends Node2D
 signal coin_total_changed
 signal enemy_total_changed
 
+export(PackedScene) var levelCompleteScene
+
 var playerScene = preload("res://scenes/Player.tscn")
 var spawnPosition = Vector2.ZERO
 var currentPlayerNode = null
@@ -67,7 +69,10 @@ func enemy_total_changed(newTotal):
 	
 # FLAG, GAME WINNING CONDITION
 func on_player_won():
+	currentPlayerNode.queue_free()
+	var levelComplete = levelCompleteScene.instance()
+	add_child(levelComplete)
 	# get to the root, find level manager and increment level
-	get_tree().get_root().get_node("LevelManager").increment_level()
+	# get_tree().get_root().get_node("LevelManager").increment_level()
 	
 
