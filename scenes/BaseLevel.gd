@@ -25,6 +25,9 @@ func _ready():
 	var flyTotal = get_tree().get_nodes_in_group("enemy_guard").size()
 	enemy_total_changed(guardTotal + flyTotal)
 	
+	# register a signal to listen for enemy reaching to the flag
+	get_node("Flag").connect("player_won", self, "on_player_won")
+	
 func register_player(player):
 	currentPlayerNode = player
 	# deferred means it'll go to the next idle frame 
@@ -61,5 +64,10 @@ func enemy_killed():
 func enemy_total_changed(newTotal):
 	totalEnemies= newTotal
 	emit_signal("enemy_total_changed", totalEnemies, enemiesKilled)
+	
+# FLAG, GAME WINNING CONDITION
+func on_player_won():
+	# get to the root, find level manager and increment level
+	get_tree().get_root().get_node("LevelManager").increment_level()
 	
 
