@@ -69,6 +69,8 @@ func _process_normal(delta):
 		# recently jumped, set doublejump to false
 		if(!is_on_floor()  && get_node("CoyoteTimer").is_stopped()):
 			hasDoubleJump = false
+			# shake the camera when double jumping
+			get_tree().get_root().get_node("Helpers").apply_camera_shake(0.75)
 		# stop the coyote jump when jumping (Required for double jump)tile_0151.pngtile_0152.png
 		get_node("CoyoteTimer").stop()
 
@@ -99,8 +101,11 @@ func _process_normal(delta):
 	
 	update_animation()
 
+# dash movement
 func _process_dash(delta):
 	if(isStateNew == true):
+		# shake the camera
+		get_tree().get_root().get_node("Helpers").apply_camera_shake(0.75)
 		get_node("DashArea/CollisionShape2D").disabled = false
 		get_node("HazardArea").collision_mask = dashHazardMask
 		get_node("AnimatedSprite").play("jump")
