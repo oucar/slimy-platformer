@@ -24,7 +24,7 @@ func _ready():
 	
 	# total enemies in the scene
 	var guardTotal = get_tree().get_nodes_in_group("enemy_guard").size()
-	var flyTotal = get_tree().get_nodes_in_group("enemy_guard").size()
+	var flyTotal = get_tree().get_nodes_in_group("enemy_fly").size()
 	enemy_total_changed(guardTotal + flyTotal)
 	
 	# register a signal to listen for enemy reaching to the flag
