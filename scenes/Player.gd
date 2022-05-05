@@ -27,7 +27,6 @@ func _ready():
 	# Get hazardArea node, connect area_entered, listen for self and call on_hazard_area_entered!
 	# Make sure you set the collision layer and mask too!
 	get_node("HazardArea").connect("area_entered", self, "on_hazard_area_entered")
-	
 	defaultHazardMask = get_node("HazardArea").collision_mask
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -105,7 +104,7 @@ func _process_normal(delta):
 func _process_dash(delta):
 	if(isStateNew == true):
 		# shake the camera
-		get_tree().get_root().get_node("Helpers").apply_camera_shake(0.75)
+		get_tree().get_root().get_node("Helpers").apply_camera_shake(1)
 		get_node("DashArea/CollisionShape2D").disabled = false
 		get_node("HazardArea").collision_mask = dashHazardMask
 		get_node("AnimatedSprite").play("jump")
@@ -158,4 +157,5 @@ func update_animation():
 ###### SIGNAL RELATED ###### 
 func on_hazard_area_entered(_area2d):
 	# print("You would die, but this is your lucky day.")
+	# get_node("BloodSplatter").splatter()
 	emit_signal("died")
