@@ -53,6 +53,9 @@ func get_movement_vector():
 # movement -process- functions for normal movement (running) and dash (dashing)
 func _process_normal(delta):
 	if(isStateNew):
+		# dash particles
+		get_node("DashParticles").emitting = false
+		
 		get_node("DashArea/CollisionShape2D").disabled = true
 		get_node("HazardArea").collision_mask = defaultHazardMask
 	var moveVector = get_movement_vector()
@@ -106,8 +109,11 @@ func _process_normal(delta):
 # dash movement
 func _process_dash(delta):
 	if(isStateNew == true):
+		# dash particles
+		get_node("DashParticles").emitting = true
 		# shake the camera
 		get_tree().get_root().get_node("Helpers").apply_camera_shake(1)
+		
 		get_node("DashArea/CollisionShape2D").disabled = false
 		get_node("HazardArea").collision_mask = dashHazardMask
 		get_node("AnimatedSprite").play("jump")
