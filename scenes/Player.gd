@@ -133,7 +133,6 @@ func _process_dash(delta):
 	if(abs(velocity.x) < minDashSpeed):
 		call_deferred("change_state", State.NORMAL)
 		
-	
 func change_state(newState):
 	currentState = newState
 	isStateNew = true
