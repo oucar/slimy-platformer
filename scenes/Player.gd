@@ -4,6 +4,7 @@ extends KinematicBody2D
 signal died
 
 var playerDeathScene = preload("res://scenes/PlayerDeath.tscn")
+var footstepParticles = preload("res://scenes/FootstepParticles.tscn")
 
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
 
@@ -30,6 +31,8 @@ func _ready():
 	# Get hazardArea node, connect area_entered, listen for self and call on_hazard_area_entered!
 	# Make sure you set the collision layer and mask too!
 	get_node("HazardArea").connect("area_entered", self, "on_hazard_area_entered")
+	# Footstep particles
+	get_node("AnimatedSprite").connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = get_node("HazardArea").collision_mask
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -92,6 +95,16 @@ func _process_normal(delta):
 	# coyote time
 	if(wasOnFloor && !is_on_floor()):
 		get_node("CoyoteTimer").start()
+	
+	# was not on the floor, just landed
+	# !isStateNew --> prevent the particles when first respawning
+	if(!wasOnFloor && is_on_floor() && !isStateNew):
+			var footstep = footstepParticles.instance()
+			get_parent().add_child(footstep)
+			footstep.scale = Vector2.ONE * 1.5
+			footstep.global_position = global_position
+		
+		
 		
 	# double jump 
 	if(is_on_floor()):
@@ -181,3 +194,8 @@ func kill():
 func on_hazard_area_entered(_area2d):
 	call_deferred("kill")
 	
+func on_animated_sprite_frame_changed():
+		if(get_node("AnimatedSprite").animation == "run" && get_node("AnimatedSprite").frame == 0):
+			var footstep = footstepParticles.instance()
+			get_parent().add_child(footstep)
+			footstep.global_position = global_position
