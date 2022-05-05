@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/enemy/character_0024.png" type="Texture" id=1]
 [ext_resource path="res://scenes/EnemyFly.gd" type="Script" id=2]
 [ext_resource path="res://assets/enemy/character_0026.png" type="Texture" id=3]
 [ext_resource path="res://assets/enemy/character_0025.png" type="Texture" id=4]
+[ext_resource path="res://scenes/BloodSplatter.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -70,3 +71,8 @@ collision_mask = 0
 position = Vector2( 0, -9 )
 rotation = 1.5708
 shape = SubResource( 6 )
+
+[node name="BloodSplatter" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, -13 )
+BloodParticleNumber = 20
+RandomVelocity = 300.0
