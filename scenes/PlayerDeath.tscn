@@ -54,7 +54,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.6 ),
+"times": PoolRealArray( 0, 0.45 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
@@ -144,7 +144,7 @@ anims/death = SubResource( 7 )
 [node name="Sprite" type="Sprite" parent="Visuals"]
 position = Vector2( 0, -7 )
 rotation = 1.5708
-scale = Vector2( 1.08125, 1.08125 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 2 )
 offset = Vector2( 0, -12 )
 
