@@ -3,6 +3,8 @@ extends KinematicBody2D
 # signals
 signal died
 
+var playerDeathScene = preload("res://scenes/PlayerDeath.tscn")
+
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
 
 # finite state 
@@ -21,6 +23,7 @@ var hasDash
 var isStateNew = true
 var currentState = State.NORMAL
 var defaultHazardMask = 0
+var isDying = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -154,8 +157,22 @@ func update_animation():
 		else:
 			get_node("AnimatedSprite").flip_h = false
 				
-###### SIGNAL RELATED ###### 
-func on_hazard_area_entered(_area2d):
+###### PLAYER DEATH ANIMATION ###### 
+func kill():
+	# if you land the intersection of two spikes, kill() gets called twice.
+	# use isDying to prevent calling it twice
+	if(isDying == true):
+		return 
+	isDying = true
 	# print("You would die, but this is your lucky day.")
 	# get_node("BloodSplatter").splatter()
+	var playerDeathInstance = playerDeathScene.instance()
+	get_parent().add_child_below_node(self, playerDeathInstance)
+	playerDeathInstance.global_position = global_position
+	playerDeathInstance.velocity = velocity
 	emit_signal("died")
+	
+###### SIGNAL RELATED ###### 
+func on_hazard_area_entered(_area2d):
+	call_deferred("kill")
+	

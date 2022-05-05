@@ -39,13 +39,13 @@ func _process(delta):
 
 # Following the player with camera
 func get_target_position():
-	# get the player group
-	var players = get_tree().get_nodes_in_group("player")
-	if(players.size() > 0):
-		var player = players[0]
-		targetPosition = player.global_position
+	# get the player group to follow the LIVE player
+	var player = get_target_position_from_node_group("player")
+	# no alive player, get the dead one
+	if (player == false):
+		get_target_position_from_node_group("player_death")
 
-# will be used later
+# Following the player with camera
 func get_target_position_from_node_group(groupName):
 	var nodes = get_tree().get_nodes_in_group(groupName)
 	if (nodes.size() > 0):
