@@ -70,4 +70,4 @@ shape = SubResource( 5 )
 [node name="BloodSplatter" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, -11 )
 BloodParticleNumber = 20
-RandomVelocity = 300.0
+RandomVelocity = 450.0

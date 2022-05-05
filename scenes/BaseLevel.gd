@@ -15,8 +15,8 @@ var totalEnemies = 0
 var enemiesKilled = 0
 
 func _ready():
-	spawnPosition = get_node("Player").global_position
-	register_player(get_node("Player"))
+	spawnPosition = get_node("PlayerRoot/Player").global_position
+	register_player(get_node("PlayerRoot/Player"))
 	
 	# total coins in the scene 
 	# a group for the coins in the coin scene 
@@ -39,12 +39,16 @@ func register_player(player):
 func create_player():
 	var playerInstance = playerScene.instance()
 	# replaces the player node
-	add_child_below_node(currentPlayerNode, playerInstance)
+	get_node("PlayerRoot").add_child(playerInstance)
 	playerInstance.global_position = spawnPosition
 	register_player(playerInstance)
 	
 func on_player_died():
 	currentPlayerNode.queue_free()
+	# free the player but wait for a small delay
+	# async in javascript -- on_player_died will wait for a second, but everything else will keep running
+	var timer = get_tree().create_timer(1.5)
+	yield(timer, "timeout")
 	create_player()
 
 # COUNTING COINS COLLECTED
