@@ -19,7 +19,7 @@ void fragment(){
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = SubResource( 8 )
-shader_param/baseColor = Color( 0.772549, 0.807843, 0.807843, 1 )
+shader_param/baseColor = Color( 0.933333, 0.94902, 0.94902, 1 )
 
 [sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 1 ), 0.0, -0.628958, 0, 0, Vector2( 0.213483, 0.991885 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.26111, 0.0, 1, 0 ]
