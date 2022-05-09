@@ -38,11 +38,6 @@ scale_curve = SubResource( 11 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "run",
@@ -51,6 +46,11 @@ animations = [ {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idle",
 "speed": 5.0
 } ]
 
@@ -129,4 +129,3 @@ disabled = true
 
 [node name="BloodSplatter" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, -17 )
-script = null
