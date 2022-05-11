@@ -44,6 +44,7 @@ anim_offset_random = 1.0
 material = SubResource( 1 )
 amount = 10
 lifetime = 20.0
+preprocess = 5.0
 local_coords = false
 process_material = SubResource( 2 )
 texture = ExtResource( 1 )
