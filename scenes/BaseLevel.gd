@@ -42,6 +42,8 @@ func create_player():
 	get_node("PlayerRoot").add_child(playerInstance)
 	playerInstance.global_position = spawnPosition
 	register_player(playerInstance)
+	# reloading the level
+	get_tree().reload_current_scene()
 	
 func on_player_died():
 	currentPlayerNode.queue_free()
