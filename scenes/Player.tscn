@@ -38,20 +38,20 @@ scale_curve = SubResource( 11 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "run",
-"speed": 10.0
+"name": "idle",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": true,
-"name": "idle",
-"speed": 5.0
+"name": "run",
+"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=6]
@@ -64,8 +64,7 @@ radius = 12.0
 extents = Vector2( 5, 9.5 )
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 11.0
-height = 14.0
+radius = 13.0
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 collision_layer = 0
@@ -76,7 +75,6 @@ dashHazardMask = 524288
 show_behind_parent = true
 material = SubResource( 9 )
 position = Vector2( 0, -12 )
-emitting = false
 amount = 20
 local_coords = false
 process_material = SubResource( 7 )
@@ -107,17 +105,14 @@ position = Vector2( 0, -12 )
 shape = SubResource( 3 )
 
 [node name="HazardArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 1048576
 collision_mask = 1048576
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardArea"]
-visible = false
 position = Vector2( 0, -10.5 )
 shape = SubResource( 4 )
 
 [node name="DashArea" type="Area2D" parent="."]
-visible = false
 position = Vector2( 0, -11 )
 collision_layer = 0
 collision_mask = 2

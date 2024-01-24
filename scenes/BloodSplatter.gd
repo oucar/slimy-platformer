@@ -1,7 +1,7 @@
 extends Node2D
 
 export var BloodParticleScene : PackedScene
-export var BloodParticleNumber := 15
+export var BloodParticleAmount := 40
 export var RandomVelocity := 1000.0
 const BloodSplatterSignalName := "OnDeath"
 
@@ -20,7 +20,7 @@ func on_parent_death(parent : Node):
 	
 func splatter(particles_to_spawn := -1):
 	if(particles_to_spawn <= 0):
-		particles_to_spawn = BloodParticleNumber
+		particles_to_spawn = BloodParticleAmount
 		
 	var spawnedParticle : RigidBody2D
 	
